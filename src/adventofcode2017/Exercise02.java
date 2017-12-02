@@ -93,10 +93,7 @@ public class Exercise02 {
         Integer[] b = Arrays.stream(a).boxed().sorted(comp.reversed()).toArray(Integer[]::new);
         for (int index = 0; index < b.length - 1; index++) {
             for (int i = index + 1; i < b.length; i++) {
-                if (b[index] % b[i] == 0) {
-                    System.out.println(b[index] + "  " + b[i]);
-                    return b[index] / b[i];
-                }  
+                if (b[index] % b[i] == 0) return b[index] / b[i]; 
             }
         }
         throw new RuntimeException("no divisables found in array " + Arrays.toString(b));
