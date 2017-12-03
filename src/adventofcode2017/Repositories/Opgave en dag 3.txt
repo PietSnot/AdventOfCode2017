@@ -1,0 +1,57 @@
+AdventOfCode 2017, opgave 3
+
+--- Day 3: Spiral Memory ---
+
+You come across an experimental new kind of memory stored on an infinite two-dimensional grid.
+
+Each square on the grid is allocated in a spiral pattern starting at a location marked 1 and then counting up while spiraling outward. For example, the first few squares are allocated like this:
+
+17  16  15  14  13
+18   5   4   3  12
+19   6   1   2  11
+20   7   8   9  10
+21  22  23---> ...
+While this is very space-efficient (no squares are skipped), requested data must be carried back to square 1 (the location of the only access port for this memory system) by programs that can only move up, down, left, or right. They always take the shortest path: the Manhattan Distance between the location of the data and square 1.
+
+For example:
+
+Data from square 1 is carried 0 steps, since it's at the access port.
+Data from square 12 is carried 3 steps, such as: down, left, left.
+Data from square 23 is carried only 2 steps: up twice.
+Data from square 1024 must be carried 31 steps.
+How many steps are required to carry the data from the square identified in your puzzle input all the way to the access port?
+
+Your puzzle input is 289326.
+
+//**********************************************************************************
+
+My solution
+
+1) "ring" 
+let ring 1 = the number 1 in the middle.
+ring 2 = ring around it, here going from 2 to 9
+ring 3 = ring around ring 2, going from 10 to 25
+Notice that the highest number in the ring is (2n - 1)^2, where n is the ring number.
+In general: ring n is going from (2(n-1) - 1)^2 + 1 to (2n-1)^2 or from 4n^2 - 12n + 10 to 4n^2 - 4n + 1
+
+2) given an input K, the ring is falls into is n = ceiling( (1 + sqrt(K)) / 2).
+3) the length of a side of ring n = 2n - 1
+4) the right bottom number of ring n has number rb = (2n - 1)^2 = 4n^2 - 4n + 1
+5) the left bottom corner has therefore the number lb = rb - (2n - 2) = 4n^2 - 6n + 3
+6) the left top corner has therefore the number lt = lb - (2n - 2) = 4n^2 - 8n + 5
+7) the right top corner has therefore the number rt = lt - (2n - 2) = 4n^2 - 10n + 7
+And from this, we determine the numbers in the middle of the sides
+8) the right middle rm = rt - (n - 1) = 4n^2 - 11n + 8
+9) the top middel tm = rt + (n - 1) = 4n^2 - 9n + 6
+10) the left middle lm = lt + n - 1 = 4n^2 - 8n + 5 + n - 1 = 4n^2 - 7n + 4
+11) the bottom middle bm = lb + n - 1 = 4n^2 - 6n + 3 - n - 1 = 4n^2 - 5n + 2
+
+The solution now goes:
+
+1) given input number K, determine ring n = celing((1 + sqr(K)) / 2)
+2) determine on what side of the ring K lies:
+   if K <= rt then side is r
+   else if K <= lt then side = t
+   else if K <= lb then side = l
+   else s = b
+3) the required distance is then the distance from K (absolute value!) to the middlepoint of the side it's on, plus n - 1 steps from that middelpoint to 1.
