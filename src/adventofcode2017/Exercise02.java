@@ -15,7 +15,10 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.IntSummaryStatistics;
+import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -23,22 +26,12 @@ import java.util.regex.Pattern;
  */
 public class Exercise02 {
     
-    
-    //*************************************************
-    // members
-    //*************************************************
     private int[][] inputArray2D;
     
-    //*************************************************
-    // constructor
-    //*************************************************
     private Exercise02() {
         initializeInputArray();
     }
     
-    //*************************************************
-    // main
-    //*************************************************
     public static void main(String... args) {
         Exercise02 opgave02 = new Exercise02();
         int solutionPart1 = opgave02.solvePart1();
@@ -47,9 +40,6 @@ public class Exercise02 {
         System.out.println("solution part 2: " + solutionPart2);
     }
     
-    //*************************************************
-    // private methods
-    //*************************************************
     private void initializeInputArray() {
         try {
             URL url = Exercise02.class.getResource("Repositories/inputExercise02.txt");
@@ -61,41 +51,31 @@ public class Exercise02 {
         }
     }
     
-    //-----------------------------------------------
     private int solvePart1() {
-        int result = Arrays.stream(inputArray2D).mapToInt(this::getMaxMinusMin).sum();
-        return result;
+        return Arrays.stream(inputArray2D).mapToInt(this::getMaxMinusMin).sum();
     }
     
-    //-----------------------------------------------
     private int solvePart2() {
         return Arrays.stream(inputArray2D).mapToInt(this::getDivisables).sum();
     }
     
-    //-----------------------------------------------
     private int getMaxMinusMin(int[] a) {
         IntSummaryStatistics stats = Arrays.stream(a).summaryStatistics();
         return stats.getMax() - stats.getMin();
     }
      
-    //-----------------------------------------------
     private int[] translateStringToIntArray(String s) {
-        return Pattern.compile("\\s+")
-                .splitAsStream(s)
-                .mapToInt(Integer::parseInt)
-                .toArray()
+        return Pattern.compile("\\s+").splitAsStream(s)
+                .mapToInt(Integer::parseInt).sorted().toArray()
         ;
-    }  
+    }
     
-    //-----------------------------------------------
     private int getDivisables(int[] a) {
-        Comparator<Integer> comp = Integer::compare;
-        Integer[] b = Arrays.stream(a).boxed().sorted(comp.reversed()).toArray(Integer[]::new);
-        for (int index = 0; index < b.length - 1; index++) {
-            for (int i = index + 1; i < b.length; i++) {
-                if (b[index] % b[i] == 0) return b[index] / b[i]; 
+        for (int index = a.length - 1; index > 0; index--) {
+            for (int i = index - 1; i >= 0; i--) {
+                if (a[index] % a[i] == 0) return a[index] / a[i]; 
             }
         }
-        throw new RuntimeException("no divisables found in array " + Arrays.toString(b));
+        throw new RuntimeException("no divisables found in array " + Arrays.toString(a));
     }
 }
