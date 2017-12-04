@@ -60,8 +60,7 @@ public class Exercise04 {
     
     private boolean isValidPassPhrasePart1(String s) {
         Set<String> set = new HashSet<>();
-        boolean b = Pattern.compile("\\s+").splitAsStream(s).allMatch(set::add);
-        return b;
+        return Pattern.compile("\\s+").splitAsStream(s).allMatch(set::add);
     }
     
     private boolean isValidPassPhrasePart2(String s) {
