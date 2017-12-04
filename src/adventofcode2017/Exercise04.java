@@ -54,7 +54,6 @@ public class Exercise04 {
            inputPassPhrases = Files.lines(path).collect(Collectors.toList());
         }
         catch (URISyntaxException | IOException e) {
-            e.printStackTrace();
             throw new RuntimeException("Can't read inputfile!!!");
         }
     }
@@ -67,16 +66,12 @@ public class Exercise04 {
     
     private boolean isValidPassPhrasePart2(String s) {
         Set<String> set = new HashSet<>();
-        for (String string: s.split("\\s+")) {
-            if (!set.add(makeUniform(string))) return false;
-        }
-        return true;
+        return Arrays.stream(s.split("\\s+")).allMatch(str -> set.add(makeUniform(str)));
     }
     
     private String makeUniform(String s) {
         byte[] chars = s.getBytes();
         Arrays.sort(chars);
-        String x = new String(chars);
-        return x;
+        return new String(chars);
     }
 }
