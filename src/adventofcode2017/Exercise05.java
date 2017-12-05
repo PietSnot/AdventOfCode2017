@@ -38,7 +38,7 @@ public class Exercise05 {
             Path path = Paths.get(url.toURI());
             inputData = Files.lines(path).mapToInt(Integer::parseInt).toArray();
         }
-        catch (Exception e) {
+        catch (Exception ex) {
             throw new RuntimeException("Can't read input data!!");
         }
     }
