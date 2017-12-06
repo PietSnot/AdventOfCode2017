@@ -52,9 +52,6 @@ public class Exercise06 {
     
     private int solvePart1() {
         return determineNrOfStepsPart1(startList);
-//        List<Integer> list = new ArrayList<>();
-//        list.add(1); list.add(2); list.add(3);
-//        return determineNrOfStepsPart1(list);
     }
     
     private int determineNrOfStepsPart1(List<Integer> list) {
