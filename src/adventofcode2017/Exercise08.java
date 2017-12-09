@@ -81,12 +81,6 @@ public class Exercise08 {
             }
         }
         return registers.values().stream().mapToInt(i -> i).max().getAsInt();
-//        instructions.stream()
-//            .map(s -> s.split("\\s+"))
-//            .filter(array -> predicates.get(array[5]).test(array[4], Integer.parseInt(array[6])))
-//            .forEach(array -> actions.get(array[1]).accept(array[0], Integer.parseInt(array[2])))
-//        ;
-//        return registers.values().stream().mapToInt(i -> i).max().getAsInt();
     }
     
     private void fillRegisters() {
