@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  *
@@ -68,7 +69,7 @@ public class Exercise11 {
             if (manhattan(point) > solutionPart2) solutionPart2 = manhattan(point);
         }
         solutionPart1 = manhattan(point);
-    }
+   }
     
     private int manhattan(Point p) {
         return (Math.abs(p.x) + Math.abs(p.y)) / 2;
