@@ -49,8 +49,8 @@ public class Exercise15 {
     }
     
     private void solvePart2() {
-        A = new Generator(16807L, 116L);
-        B = new Generator(48271L, 299L);
+        A.reset();
+        B.reset();
         solutionPart2 = LongStream.range(0, 5_000_000)
                 .filter(i -> A.last16Bits(A.nextValue(4L)) == B.last16Bits(B.nextValue(8L)))
                 .count()
@@ -83,6 +83,10 @@ class Generator {
     
     public long last16Bits(long x) {
         return x & 0xFFFF;
+    }
+    
+    public void reset() {
+        previousValue = startingValue;
     }
     
 }
