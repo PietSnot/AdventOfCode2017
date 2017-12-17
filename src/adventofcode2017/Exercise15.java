@@ -26,19 +26,11 @@ public class Exercise15 {
         System.out.format("solution Part 1: %,d%n", opgave15.solutionPart1);
         opgave15.solvePart2();
         System.out.format("solution Part 2: %,d%n", opgave15.solutionPart2);
-//        new Exercise15().test();
     }
     
     Exercise15() {
         A = new Generator(16807L, 116L);
         B = new Generator(48271L, 299L);
-    }
-    
-    private void test() {
-        List<Long> list = new ArrayList<>();
-        Generator A = new Generator(48271, 8921);
-        for (int i = 1; i<=5; i++) list.add(A.nextValue(8));
-        int a = 5;
     }
     
     private void solvePart1() {
@@ -60,7 +52,7 @@ public class Exercise15 {
 }
 
 class Generator {
-    private static final long divisor = 2147483647L;
+    private static final long DIVISOR = 2147483647L;
     private final long startingValue;
     private final long multiplyFactor;
     private long previousValue;
@@ -72,7 +64,7 @@ class Generator {
     }
     
     public long nextValue() {
-        previousValue = (previousValue * multiplyFactor) % divisor;
+        previousValue = (previousValue * multiplyFactor) % DIVISOR;
         return previousValue;
     }
     
@@ -88,5 +80,4 @@ class Generator {
     public void reset() {
         previousValue = startingValue;
     }
-    
 }
