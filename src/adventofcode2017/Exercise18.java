@@ -50,6 +50,7 @@ public class Exercise18 {
         while (PC >= 0 && PC < instructions.size() && !firstRecovery) {
             String[] s = instructions.get((int) PC).split("\\s+");
             basicCommands.get(s[0]).apply(s);
+            total++;
         }
     }
     

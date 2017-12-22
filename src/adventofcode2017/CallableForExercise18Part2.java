@@ -24,8 +24,8 @@ public class CallableForExercise18Part2 implements Callable<String> {
     Map<String, Long> registers;
     Map<String, Instruction> basicCommands;
     LinkedTransferQueue<Long> sendTo, receiveFrom;
-    TimeUnit timeUnit = TimeUnit.MINUTES;
-    long maxWait = 1;
+    TimeUnit timeUnit = TimeUnit.SECONDS;
+    long maxWait = 10;
     long PC = 0;
     long nrOfSends = 0;
     String result;
