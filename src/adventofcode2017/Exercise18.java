@@ -67,10 +67,10 @@ public class Exercise18 {
             String solution = futureOne.get(10L, TimeUnit.MINUTES);
             System.out.println("part 2: " + solution);
             String x = futureZero.get(10L, TimeUnit.MINUTES);
-            System.out.println("Callable 0 also finished");
+            System.out.println("Callable 0 also finished, " + x);
             service.shutdown();
             service.awaitTermination(10L, TimeUnit.SECONDS);
-            System.out.println("Everthing finished!");
+            System.out.println("Everything finished!");
         }
         catch (InterruptedException | ExecutionException | TimeoutException e) {
             e.printStackTrace();
