@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.LinkedTransferQueue;
 import java.util.concurrent.TimeUnit;
 
@@ -17,8 +18,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Piet
  */
-public class RunnableForExercise18Part2 implements Runnable {
-    
+public class CallableForExercise18Part2 implements Callable<String> {
     long id;
     List<String> instructions;
     Map<String, Long> registers;
@@ -28,8 +28,9 @@ public class RunnableForExercise18Part2 implements Runnable {
     long maxWait = 1;
     long PC = 0;
     long nrOfSends = 0;
+    String result;
     
-    RunnableForExercise18Part2(long id, LinkedTransferQueue sendTo, LinkedTransferQueue receiveFrom, List<String> instructions) {
+    CallableForExercise18Part2(long id, LinkedTransferQueue sendTo, LinkedTransferQueue receiveFrom, List<String> instructions) {
         this.id = id;
         this.sendTo = sendTo;
         this.receiveFrom = receiveFrom;
@@ -90,15 +91,16 @@ public class RunnableForExercise18Part2 implements Runnable {
         try {
             Long x = receiveFrom.poll(maxWait, timeUnit);
             if (x == null) {
-                String t = "Runnable " + id + " waiting too long for a receive value!!!!\n";
-                t += "nr of sends: " + nrOfSends;
-                throw new RuntimeException(t);
+                result = "Callable " + id + " waiting too long for a receive value!!!!\n";
+                result += "nr of sends: " + nrOfSends;
+                throw new RuntimeException(result);
             }
             registers.put(s[1], x);
             PC++;
         }
         catch (InterruptedException e) {
-            throw new RuntimeException("interrupted during wait for receive!!!!");
+            result = "Callable: " + id + " interrupted during wait for receive!!!!";
+            throw new RuntimeException(result);
         }
     }
     
@@ -119,10 +121,17 @@ public class RunnableForExercise18Part2 implements Runnable {
     }
 
     @Override
-    public void run() {
-        while (PC >= 0 && PC < instructions.size()) {
-            String[] s = instructions.get((int) PC).split("\\s+");
-            basicCommands.get(s[0]).apply(s);
+    public String call() {
+        try {
+            while (PC >= 0 && PC < instructions.size()) {
+                String[] s = instructions.get((int) PC).split("\\s+");
+                basicCommands.get(s[0]).apply(s);
+                result = "terminated: got outside program, nr of sends: " + nrOfSends;
+            }
         }
+        catch (RuntimeException e) {
+            return e.getMessage();
+        }
+        return result;
     }
 }

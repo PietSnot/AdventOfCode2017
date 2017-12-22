@@ -12,10 +12,16 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.LinkedTransferQueue;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  *
@@ -35,6 +41,7 @@ public class Exercise18 {
         Exercise18 opgave18 = new Exercise18();
         opgave18.solvePart1();
         System.out.println("aantal instructies verwerkt: " + opgave18.total);
+        opgave18.solvePart2();
     }
     
     private void solvePart1() {
@@ -43,6 +50,30 @@ public class Exercise18 {
         while (PC >= 0 && PC < instructions.size() && !firstRecovery) {
             String[] s = instructions.get((int) PC).split("\\s+");
             basicCommands.get(s[0]).apply(s);
+        }
+    }
+    
+    private void solvePart2() {
+        LinkedTransferQueue sendTo = new LinkedTransferQueue();
+        LinkedTransferQueue receiveFrom = new LinkedTransferQueue();
+        CallableForExercise18Part2 zero = new CallableForExercise18Part2(
+              0L, sendTo, receiveFrom, instructions);
+        CallableForExercise18Part2 one = new CallableForExercise18Part2(
+              1L, receiveFrom, sendTo, instructions);
+        ExecutorService service = Executors.newFixedThreadPool(2);
+        Future<String> futureZero = service.submit(zero);
+        Future<String> futureOne = service.submit(one);
+        try {
+            String solution = futureOne.get(10L, TimeUnit.MINUTES);
+            System.out.println("part 2: " + solution);
+            String x = futureZero.get(10L, TimeUnit.MINUTES);
+            System.out.println("Callable 0 also finished");
+            service.shutdown();
+            service.awaitTermination(10L, TimeUnit.SECONDS);
+            System.out.println("Everthing finished!");
+        }
+        catch (InterruptedException | ExecutionException | TimeoutException e) {
+            e.printStackTrace();
         }
     }
     
