@@ -54,7 +54,6 @@ public class Exercise19 {
             if (currentLocation == null) break;
             solutionPart2++;
             char c = inputArray[currentLocation.x][currentLocation.y];
-//            System.out.println("directon: " + currentDirection + " ; location: " + currentLocation + "; char: " + c);
             if (Character.isLetter(c)) solutionPart1 += c;
         }
     }
@@ -64,12 +63,12 @@ public class Exercise19 {
             URL url = getClass().getResource("Repositories/inputExercise19.txt");
             Path path = Paths.get(url.toURI());
             List<String> lines = Files.readAllLines(path);
+            System.out.println("nr of inputlines: " + lines.size());
+            System.out.println("length of input lines: " + lines.stream().mapToInt(String::length).distinct().boxed().collect(Collectors.toList()));
             inputArray = lines.stream()
                     .map(line -> line.toCharArray())
                     .toArray(char[][]::new)
             ;
-            System.out.println("arrays.lenght: " + Arrays.stream(inputArray).mapToInt(a -> a.length).boxed().collect(Collectors.toSet()));
-            
         }
         catch(IOException | URISyntaxException e) {
             throw new RuntimeException("Can't read inputfile!!!!!!!");
