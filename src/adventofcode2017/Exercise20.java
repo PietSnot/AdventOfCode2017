@@ -13,7 +13,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,7 +37,7 @@ public class Exercise20 {
         System.out.println(s + opgave20.solutionPart1.id);
         int attempts = 100_000;
         opgave20.solvePart2(attempts);
-        System.out.format("after %,d attempts partivcles left: %,d%n", attempts, opgave20.solutionPart2);
+        System.out.format("after %,d attempts particles left: %,d%n", attempts, opgave20.solutionPart2);
     }
     
     private Exercise20() {
