@@ -76,8 +76,6 @@ public class Exercise19 {
     }
      
     private void getNextLocation() {
-        int x = currentLocation.x;
-        int y = currentLocation.y;
         switch (currentDirection) {
             case LEFT:
                 if (canGoLeft()) goLeft();
