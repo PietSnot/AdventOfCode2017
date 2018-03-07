@@ -37,7 +37,6 @@ public class DomingasPleckauskas2 {
     Point fixedPoint;
     Point aimPoint;
     Point oldPoint;
-    boolean firstTime = true;
     
     public static void main(String... args) {
         SwingUtilities.invokeLater(DomingasPleckauskas2::new);
@@ -45,8 +44,8 @@ public class DomingasPleckauskas2 {
     
     DomingasPleckauskas2() {
         fixedPoint = new Point(100, 300);
-        aimPoint = fixedPoint;
-        oldPoint = fixedPoint;
+        aimPoint = new Point();
+        oldPoint = new Point();
         
         try {
             buf = ImageIO.read(new File("D:\\Syls bestanden\\bezier.png"));
@@ -96,7 +95,7 @@ public class DomingasPleckauskas2 {
             public void mouseMoved(MouseEvent m) {
                 oldPoint = aimPoint;
                 aimPoint = m.getPoint();
-                arrowAim.repaint();
+                panel.repaint();
             }
         };
         
@@ -115,6 +114,7 @@ public class DomingasPleckauskas2 {
         g2d.setXORMode(Color.BLUE);
         g2d.drawLine(fixedPoint.x, fixedPoint.y, oldPoint.x, oldPoint.y);
         g2d.drawLine(fixedPoint.x, fixedPoint.y, aimPoint.x, aimPoint.y);
+//        System.out.println("In drawArrow");
     }
 }
 
