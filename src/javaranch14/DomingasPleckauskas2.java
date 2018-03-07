@@ -110,6 +110,7 @@ public class DomingasPleckauskas2 {
     }
     
     private void drawArrow(Graphics2D g2d) {
+        int a = 7;
         g2d.setStroke(new BasicStroke(2.5f));
         g2d.setXORMode(Color.BLUE);
         g2d.drawLine(fixedPoint.x, fixedPoint.y, oldPoint.x, oldPoint.y);
