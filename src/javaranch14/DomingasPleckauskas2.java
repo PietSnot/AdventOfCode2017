@@ -115,7 +115,6 @@ public class DomingasPleckauskas2 {
         g2d.setXORMode(Color.BLUE);
         g2d.drawLine(fixedPoint.x, fixedPoint.y, oldPoint.x, oldPoint.y);
         g2d.drawLine(fixedPoint.x, fixedPoint.y, aimPoint.x, aimPoint.y);
-//        System.out.println("In drawArrow");
     }
 }
 
